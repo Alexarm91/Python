@@ -1,0 +1,81 @@
+notebook = {}
+
+
+def new_note(a):
+    new_id = max(notebook.keys(), default=0) + 1
+    if a not in notebook.values():
+        notebook[new_id] = a
+        print(f"Note with id {new_id} added to you to-do list")
+    else:
+        print("Note already exists")
+
+
+def lists():
+    if notebook:
+        for i, j in notebook.items():
+            j = str(j)
+            print(f"Note with id {i} and content {j[:7]}...")
+    else:
+        print("List is empty")
+
+
+def retrieve(a):
+    if a in notebook:
+        print(notebook[a])
+    else:
+        print("No such id")
+
+
+def delete_note(a):
+    if a in notebook:
+        del notebook[a]
+        print(f"Note with id {a} deleted")
+    else:
+        print("No such id")
+
+
+def search(a):
+    for i, j in notebook.items():
+        if a in j:
+            print(j)
+        else:
+            print("No such note found")
+
+
+def menu():
+    while True:
+        print("1. Create new note")
+        print("2. List of notes")
+        print("3. Retrieve a note")
+        print("4. Delete a note")
+        print("5. Search")
+        print("6. Exit")
+        op = int(input("Select option\n"))
+        if op == 1:
+            note = input("Enter your note\n")
+            new_note(note)
+        elif op == 2:
+            lists()
+        elif op == 3:
+            ret_id = int(input("Enter the id of note you want to retrieve\n"))
+            retrieve(ret_id)
+        elif op == 4:
+            del_id = int(input("Enter the id of note you want to delete\n"))
+            delete_note(del_id)
+        elif op == 5:
+            search_id = input("Enter keyword\n")
+            search(search_id)
+        elif op == 6:
+            break
+        else:
+            print("Enter valid operation number")
+
+
+try:
+    menu()
+except ValueError:
+    print("Wrong input type")
+    try:
+        menu()
+    except ValueError:
+        print("Wrong input type")

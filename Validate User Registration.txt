@@ -1,0 +1,92 @@
+import re
+
+
+def valid_username(func):
+    def wrapper(*args, **kwargs):
+        lst = ["admin", "root"]
+        username = args[0]
+        if len(username) <= 4 or len(username) >= 21:
+            raise ValueError("Wrong Username")
+        if username.lower() in lst:
+            raise ValueError("Wrong Username")
+        if not username.isalpha() and not username.isnumeric():
+            raise ValueError("Wrong nick")
+        return func(*args, **kwargs)
+    return wrapper
+
+
+def valid_email(func):
+    def wrapper(*args, **kwargs):
+        regex = r"^\S+@\S+\.\S+$"
+        if not re.fullmatch(regex, args[1]):
+            raise ValueError("Wrong Email")
+        return func(*args, **kwargs)
+    return wrapper
+
+
+def valid_number(func):
+    def wrapper(*args, **kwargs):
+        num = args[2]
+        num = num.replace(" ", "")
+        num = num.replace("-", "")
+        a = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]
+        if num[0] != "+" and not num[0] in a:
+            raise ValueError("Invalid first character")
+        if len(num) != 9 and len(num) != 12:
+            raise ValueError("Invalid number")
+        return func(*args, **kwargs)
+    return wrapper
+
+
+def valid_pass(func):
+    def wrapper(*args, **kwargs):
+        up = 0
+        low = 0
+        sim = 0
+        num = 0
+
+        if len(args[3]) < 8:
+            raise ValueError("Invalid password")
+        for i in args[3]:
+            a = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]
+            if i in a:
+                num += 1
+            if i.islower():
+                low += 1
+            if i.isupper():
+                up += 1
+            if i in '!@#$%^&*':
+                sim += 1
+        if up == 0 or low == 0 or sim == 0 or num == 0:
+            raise ValueError("Invalid pass")
+        return func(*args, **kwargs)
+    return wrapper
+
+
+def password_repeat(func):
+    def wrapper(*args, **kwargs):
+        if args[4] != args[3]:
+            raise ValueError("Passwords don't match")
+        return func(*args, **kwargs)
+    return wrapper
+
+
+@valid_username
+@valid_email
+@valid_number
+@valid_pass
+@password_repeat
+def register_user(username, email, number, passw, match):
+    print("Success")
+    return username, email, number, passw, match
+
+
+try:
+    print(register_user(input("Enter username\n"), input("Enter Email\n"), input("Enter phone number\n"),
+                        input("Enter password\n"), input("Repeat password\n")))
+except ValueError as e:
+    print(e)
+    print(register_user(input("Enter username\n"), input("Enter Email\n"), input("Enter phone number\n"),
+                        input("Enter password\n"), input("Repeat password\n")))
+
+

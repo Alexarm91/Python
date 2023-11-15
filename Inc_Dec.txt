@@ -1,0 +1,42 @@
+def create_counter(inc_dec, counter=[0]):
+    if inc_dec == "+":
+        def increment():
+            a = input("Enter number if you want\n")
+            if a == "":
+                counter[0] += 1
+            else:
+                counter[0] += int(a)
+        return increment()
+    elif inc_dec == "-":
+        def decrement():
+            a = input("Enter number if you want\n")
+            if a == "":
+                counter[0] -= 1
+            else:
+                counter[0] -= int(a)
+        return decrement()
+    elif inc_dec == "=":
+        return counter[0]
+
+
+def operation():
+    while True:
+        op = input("For increment Enter +\nFor decrement Enter -\nFor current value Enter =\n")
+        if op == "+" or op == "-":
+            create_counter(op)
+        elif op == "=":
+            print(create_counter(op))
+
+        else:
+            print("Invalid operation")
+
+
+try:
+    operation()
+except:
+    print("Invalid operator")
+    try:
+        operation()
+    except:
+        print("Invalid operator")
+

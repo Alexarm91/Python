@@ -1,0 +1,87 @@
+tasks = {}
+
+
+def add_task():
+    task_id = max(tasks.keys(), default=0) + 1
+    text = input('Enter your task \n')
+    tasks[task_id] = text
+    print(f'Task added with id {task_id}')
+
+
+def delete_task(task_id):
+    if task_id in tasks:
+        del tasks[task_id]
+        print(f'Task with id {task_id} deleted')
+    else:
+        print(f'We dont have task with id {task_id}')
+
+
+def list_task():
+    if not tasks:
+        print("We don't have a tasks")
+    else:
+        for uniq_id, notes_text in tasks.items():
+            print(f'Task with id {uniq_id}: is {notes_text}...')
+
+
+def completion(task_id):
+    if task_id in tasks:
+        tasks[task_id] += " COMPLETED"
+        print(f"Task with id {task_id} completed")
+    else:
+        print(f'We dont have task with id {task_id}')
+
+
+def priority(task_id, prior):
+    if task_id in tasks:
+        if prior == "high":
+            tasks[task_id] += " HIGH"
+            print(f"Task with id {task_id} became High priority")
+        elif prior == "medium":
+            tasks[task_id] += " MEDIUM"
+            print(f"Task with id {task_id} became Medium priority")
+        elif prior == "low":
+            tasks[task_id] += " LOW"
+            print(f"Task with id {task_id} became Low priority")
+        else:
+            print("We don't have such priority")
+    else:
+        print(f'We dont have task with id {task_id}')
+
+
+def menu():
+    while True:
+        print("1. Add task")
+        print('2. Remove task')
+        print("3. List tasks")
+        print("4. Task completion")
+        print("5. Task Prioritization")
+        print("6. Quit")
+        op = input('Enter what you want\n')
+        if op == '1':
+            add_task()
+        elif op == '2':
+            uni_id = int(input('Enter uniq id \n'))
+            delete_task(uni_id)
+        elif op == '3':
+            list_task()
+        elif op == '4':
+            uni_id = int(input('Enter uniq id \n'))
+            completion(uni_id)
+        elif op == '5':
+            uni_id = int(input('Enter uniq id \n'))
+            prio = input('Enter priority level \n').lower()
+            priority(uni_id, prio)
+        elif op == '6':
+            print('Thanks, bye')
+            break
+        else:
+            print('Enter valid number')
+
+
+try:
+    menu()
+except ValueError as e:
+    print('Something goes wrong, try again')
+
+print(tasks)

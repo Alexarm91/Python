@@ -1,0 +1,60 @@
+def addition(a, b):
+    c = a + b
+    print(int(c) if str(c)[-1] == "0" and str(c)[-2] == "." else c)
+
+
+def subtraction(a, b):
+    c = a - b
+    print(int(c) if str(c)[-1] == "0" and str(c)[-2] == "." else round(c, 2))
+
+
+def multiplication(a, b):
+    c = a * b
+    print(int(c) if str(c)[-1] == "0" and str(c)[-2] == "." else round(c, 2))
+
+
+def division(a, b):
+    if b == 0:
+        raise ZeroDivisionError("0 is not required")
+    c = a / b
+    print(int(c) if str(c)[-1] == "0" and str(c)[-2] == "." else round(c, 2))
+
+
+def menu():
+    while True:
+        print("1. Addition")
+        print("2. Subtraction")
+        print("3. Multiplication")
+        print("4. Division")
+        print("5. Exit")
+        option = int(input("Select option\n"))
+        if option == 1:
+            number1 = float(input("Enter 1st number\n"))
+            number2 = float(input("Enter 2nd number\n"))
+            addition(number1, number2)
+        elif option == 2:
+            number1 = float(input("Enter 1st number\n"))
+            number2 = float(input("Enter 2nd number\n"))
+            subtraction(number1, number2)
+        elif option == 3:
+            number1 = float(input("Enter 1st number\n"))
+            number2 = float(input("Enter 2nd number\n"))
+            multiplication(number1, number2)
+        elif option == 4:
+            number1 = float(input("Enter 1st number\n"))
+            number2 = float(input("Enter 2nd number\n"))
+            division(number1, number2)
+        elif option == 5:
+            break
+        else:
+            print("No such option")
+
+
+try:
+    menu()
+except ZeroDivisionError:
+    print("0 is not required")
+    menu()
+except ValueError:
+    print("Only numbers are required")
+    menu()
